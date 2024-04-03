@@ -4,12 +4,12 @@ var nome = document.getElementById("nome");
 var email = document.getElementById("email");
 var tel = document.getElementById("tel");
 var cep = document.getElementById("cep");
-var log = document.getElementById("log");
+var logradouro = document.getElementById("logradouro");
 var num = document.getElementById("num");
-var com = document.getElementById("com");
+var complemento = document.getElementById("complemento");
 var bairro = document.getElementById("bairro");
-var cid = document.getElementById("cid");
-var est = document.getElementById("est");
+var cidade = document.getElementById("cidade");
+var estado = document.getElementById("estado");
 
 
 
@@ -24,15 +24,35 @@ function alertar(event){
    // if(resultado == 0){
      //   alert("este numero é par!");
    // }
+
+  const url = `https://viacep.com.br/ws/${cep.value}/json`;
+
+   fetch(url)
+   .then(function(resposta){
+       return resposta.json();
+   })
+   .then(
+    function(dadosDoEndereco){
+      logradouro.value = dadosDoEndereco.logradouro;
+      bairro.value = dadosDoEndereco.bairro;
+      cidade.value = dadosDoEndereco.localidade;
+      estado.value = dadosDoEndereco.uf;
+      complemento.value = dadosDoEndereco.complemento;
+    }
+   )
+   .catch(function(e){
+     alert(e.message());
+   });
+
    saida.innerText = "Nome: " + nome.value +
      "\n Email: " + email.value + 
      "\n Telefone: " + tel.value +
      "\n CEP: " + cep.value +
-     "\n Logradouro: " + log.value +
+     "\n Logradouro: " + logradouro.value +
      "\n Número: " + num.value +
-     "\n Complemento: " + com.value +
+     "\n Complemento: " + complemento.value +
      "\n Bairro: " + bairro.value +
-     "\n Cidade: " + cid.value +
-     "\n Estado: " + est.value;
+     "\n Cidade: " + cidade.value +
+     "\n Estado: " + estado.value;
 
 }
